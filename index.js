@@ -1,8 +1,29 @@
 //const { Pool } = require("pg");
 const { Pool, Client } = require("pg");
+var express = require('express');
 const dotenv = require("dotenv");
 dotenv.config();
 
+var app = express()
+
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+});
+
+app.get('/dbconnect', function (req, res) {
+	const poolResult = await poolDemo();
+	console.log("Time with pool: " + poolResult.rows[0]["now"]);
+    console.log("Time with pool: " + poolResult.rows[0]);
+    const clientResult = await clientDemo();
+    console.log("Time with client: " ,clientResult);
+    console.log("Time with client now : " + clientResult.Result);
+	
+  res.send(clientResult.Result);
+});
+
+app.listen(3000, function () {
+  console.log('Listening on port 3000...')
+})
 const credentials = {
     user: "gslabadmin",
     host: "my-rds-db.cnwhgmvzzzv.ap-south-1.rds.amazonaws.com",
@@ -64,8 +85,8 @@ async function clientDemo() {
   }
 
  
-connectDb();
-
+//connectDb();
+/*
 (async () => {
     const poolResult = await poolDemo();
     console.log("Time with pool: " + poolResult.rows[0]["now"]);
@@ -75,4 +96,5 @@ connectDb();
     console.log("Time with client now : " + clientResult.Result);
     //console.log("Time with client: " + clientResult.rows[0]);
   })();
+*/
 
