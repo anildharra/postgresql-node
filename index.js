@@ -6,11 +6,14 @@ dotenv.config();
 
 var app = express()
 
-app.get('/', function (req, res) {
+app.get('/',async function (req, res) {
   res.send('Hello World!')
 });
+app.post('/post', async function (req, res) {
+	res.send('POST Hello World!')
+};
 
-app.get('/dbconnect', function (req, res) {
+app.get('/dbconnect',async function (req, res) {
 	const poolResult = await poolDemo();
 	console.log("Time with pool: " + poolResult.rows[0]["now"]);
     console.log("Time with pool: " + poolResult.rows[0]);
